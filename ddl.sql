@@ -44,17 +44,6 @@ CREATE TABLE Orders (
 	FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
--- Table: OrderItems (One-to-Many relationship with Orders)
-CREATE TABLE OrderItems (
-	order_item_id INT AUTO_INCREMENT PRIMARY KEY,
-	order_id INT NOT NULL,
-	product_id INT NOT NULL,
-	quantity INT NOT NULL,
-	unit_price DECIMAL(10, 2) NOT NULL,
-	total_price DECIMAL(10, 2) AS (quantity * unit_price) STORED,
-	FOREIGN KEY (order_id) REFERENCES Orders(order_id) ON DELETE CASCADE,
-	FOREIGN KEY (product_id) REFERENCES Products(product_id) ON DELETE CASCADE
-);
 
 -- Table: Addresses (One-to-Many relationship with Users)
 CREATE TABLE Addresses (
@@ -69,14 +58,6 @@ CREATE TABLE Addresses (
 	FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
--- Table: ProductImages (One-to-Many relationship with Products)
-CREATE TABLE ProductImages (
-	image_id INT AUTO_INCREMENT PRIMARY KEY,
-	product_id INT NOT NULL,
-	image_url VARCHAR(255) NOT NULL,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (product_id) REFERENCES Products(product_id) ON DELETE CASCADE
-);
 
 -- Table: Tags
 CREATE TABLE Tags (

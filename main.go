@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"mygocrud/model"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -10,25 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type BaseRequest struct {
-	Page     int    `json:"page,omitempty" form:"page"`
-	PageSize int    `json:"page_size,omitempty" form:"page_size"`
-	Filter   string `json:"filter,omitempty" form:"filter"`
-}
-
-type BaseResponse struct {
-	Success bool        `json:"success"`
-	Data    interface{} `json:"data,omitempty"`
-	Message string      `json:"message,omitempty"`
-}
-
-var items []Item
-
-type Item struct {
-	Name        string `json:"name"`
-	Code        int    `json:"code"`
-	PostingDate string `json:"posting_date"`
-}
+var items []model.Item
 
 var db *gorm.DB
 
@@ -56,10 +39,10 @@ func main() {
 }
 
 func CreateItemHandler(c *gin.Context) {
-	var newItem Item
+	var newItem model.Item
 	err := c.ShouldBind(&newItem)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, BaseResponse{
+		c.JSON(http.StatusBadRequest, model.BaseResponse{
 			Success: false,
 			Data:    nil,
 			Message: fmt.Sprintf("failed to bind request: %s", err.Error()),
@@ -69,7 +52,7 @@ func CreateItemHandler(c *gin.Context) {
 
 	items = append(items, newItem)
 
-	c.JSON(http.StatusOK, BaseResponse{
+	c.JSON(http.StatusOK, model.BaseResponse{
 		Success: true,
 		Message: "Success",
 		Data:    newItem,
@@ -77,7 +60,7 @@ func CreateItemHandler(c *gin.Context) {
 }
 
 func ReadItemsHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, BaseResponse{
+	c.JSON(http.StatusOK, model.BaseResponse{
 		Success: true,
 		Message: "Success",
 		Data:    items,

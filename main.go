@@ -30,6 +30,7 @@ func main() {
 
 	r.POST("/products", service.CreateProductHandler)
 	r.GET("/products", service.ReadProductsHandler)
+	r.GET("/products/:id", service.ReadByIdProductsHandler)
 	r.PUT("/products/:id", service.UpdateProductHandler)
 	r.DELETE("/products/:id", service.DeleteProductHandler)
 

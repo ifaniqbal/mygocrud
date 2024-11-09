@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"fmt"
 	"mygocrud/model"
 	"mygocrud/repository"
@@ -9,6 +10,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/shopspring/decimal"
+	"gorm.io/gorm"
 )
 
 func ReadProductsHandler(c *gin.Context) {
@@ -39,6 +41,38 @@ func ReadProductsHandler(c *gin.Context) {
 		Success: true,
 		Message: "Success",
 		Data:    products,
+	})
+}
+
+func ReadByIdProductsHandler(c *gin.Context) {
+	idParam := c.Param("id")
+	id, err := strconv.Atoi(idParam)
+	if err != nil {
+		c.JSON(
+			http.StatusBadRequest,
+			model.NewFailedResponse(fmt.Sprintf("invalid id: %s", idParam)),
+		)
+		return
+	}
+
+	var product model.Product
+	err = repository.Db.First(&product, id).Error
+	statusCodeError := http.StatusInternalServerError
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		statusCodeError = http.StatusNotFound
+	}
+
+	if err != nil {
+		c.JSON(statusCodeError, model.Response{
+			Message: fmt.Sprintf("failed to get product: %s", err.Error()),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, model.Response{
+		Success: true,
+		Message: "Success",
+		Data:    product,
 	})
 }
 

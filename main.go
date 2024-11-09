@@ -31,6 +31,7 @@ func main() {
 	r.POST("/products", service.CreateProductHandler)
 	r.GET("/products", service.ReadProductsHandler)
 	r.PUT("/products/:id", service.UpdateProductHandler)
+	r.DELETE("/products/:id", service.DeleteProductHandler)
 
 	// Start server
 	err = r.Run(":8080")

@@ -130,3 +130,26 @@ func UpdateProductHandler(c *gin.Context) {
 
 	c.JSON(http.StatusOK, model.NewSuccessResponse("Success", productDto))
 }
+
+func DeleteProductHandler(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(
+			http.StatusBadRequest,
+			model.NewFailedResponse(fmt.Sprintf("invalid id: %s", err.Error())),
+		)
+		return
+	}
+
+	product := model.Product{ID: id}
+	err = repository.Db.Delete(product).Error
+	if err != nil {
+		c.JSON(
+			http.StatusInternalServerError,
+			model.NewFailedResponse(fmt.Sprintf("failed to delete product: %s", err.Error())),
+		)
+		return
+	}
+
+	c.JSON(http.StatusOK, model.NewSuccessResponse("Success", nil))
+}

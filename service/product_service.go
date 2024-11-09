@@ -6,9 +6,9 @@ import (
 	"mygocrud/repository"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/shopspring/decimal"
 )
 
 func ReadProductsHandler(c *gin.Context) {
@@ -56,7 +56,7 @@ func CreateProductHandler(c *gin.Context) {
 	product := model.Product{
 		ID:        productDto.ID,
 		Name:      productDto.Name,
-		Price:     productDto.Price,
+		Price:     decimal.NewFromInt(int64(productDto.Price)),
 		Stock:     productDto.Stock,
 		CreatedAt: productDto.CreatedAt,
 		UpdatedAt: productDto.UpdatedAt,
@@ -102,14 +102,21 @@ func UpdateProductHandler(c *gin.Context) {
 		return
 	}
 
-	product := model.Product{
-		ID:        id,
-		Name:      productDto.Name,
-		Price:     productDto.Price,
-		Stock:     productDto.Stock,
-		CreatedAt: time.Now().UTC(),
-		UpdatedAt: time.Now().UTC(),
+	// validasi logika
+
+	var product model.Product
+	err = repository.Db.First(&product, id).Error
+	if err != nil {
+		c.JSON(
+			http.StatusInternalServerError,
+			model.NewFailedResponse(fmt.Sprintf("invalid id: %s", err.Error())),
+		)
+		return
 	}
+
+	product.Name = productDto.Name
+	product.Price = decimal.NewFromInt(int64(productDto.Price))
+	product.Stock = productDto.Stock
 	if productDto.Description != nil {
 		product.Description.String = *productDto.Description
 		product.Description.Valid = true

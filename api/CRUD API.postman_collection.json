@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"ifan@gmail.com\",\n    \"username\": \"ifan\",\n    \"passwordHash\": \"alsdkjflk10oi2187\"\n}",
+							"raw": "{\n  \"name\":  \"laptop2\",\n  \"description\": \"bekas\",\n  \"price\":  20000000,\n  \"stock\": 2\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -24,12 +24,154 @@
 							}
 						},
 						"url": {
-							"raw": "{{base-url}}/users",
+							"raw": "{{base-url}}/products",
 							"host": [
 								"{{base-url}}"
 							],
 							"path": [
-								"users"
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"iqbal\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-url}}/users",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 31 May 2023 03:13:28 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "175"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User created successfully\",\n    \"user\": {\n        \"ID\": 7,\n        \"CreatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"UpdatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"DeletedAt\": null,\n        \"name\": \"iqbal\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":  \"laptop1\",\n  \"description\": \"baru\",\n  \"price\":  15000000,\n  \"stock\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/products/1",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"iqbal\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-url}}/users",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 31 May 2023 03:13:28 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "175"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User created successfully\",\n    \"user\": {\n        \"ID\": 7,\n        \"CreatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"UpdatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"DeletedAt\": null,\n        \"name\": \"iqbal\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/products/1",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"1"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": null,
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -106,7 +248,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"ifan@gmail.com\",\n    \"username\": \"ifan\",\n    \"passwordHash\": \"alsdkjflk10oi2187\"\n}",
+					"raw": "{\n    \"email\": \"ifan2@gmail.com\",\n    \"username\": \"ifan2\",\n    \"passwordHash\": \"2alsdkjflk10oi2187\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -176,18 +318,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base-url}}/users?filter=ifan",
+					"raw": "{{base-url}}/users",
 					"host": [
 						"{{base-url}}"
 					],
 					"path": [
 						"users"
-					],
-					"query": [
-						{
-							"key": "filter",
-							"value": "ifan"
-						}
 					]
 				}
 			},

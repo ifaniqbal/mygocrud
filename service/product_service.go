@@ -142,14 +142,17 @@ func DeleteProductHandler(c *gin.Context) {
 	}
 
 	product := model.Product{ID: id}
-	err = repository.Db.Delete(product).Error
-	if err != nil {
+	result := repository.Db.Delete(product)
+	if result.Error != nil {
 		c.JSON(
 			http.StatusInternalServerError,
-			model.NewFailedResponse(fmt.Sprintf("failed to delete product: %s", err.Error())),
+			model.NewFailedResponse(fmt.Sprintf("failed to delete product: %s", result.Error.Error())),
 		)
 		return
 	}
 
-	c.JSON(http.StatusOK, model.NewSuccessResponse("Success", nil))
+	c.JSON(
+		http.StatusOK,
+		model.NewSuccessResponse(fmt.Sprintf("%d products deleted", result.RowsAffected), nil),
+	)
 }

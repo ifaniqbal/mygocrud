@@ -30,6 +30,7 @@ func main() {
 
 	r.POST("/products", service.CreateProductHandler)
 	r.GET("/products", service.ReadProductsHandler)
+	r.PUT("/products/:id", service.UpdateProductHandler)
 
 	// Start server
 	err = r.Run(":8080")

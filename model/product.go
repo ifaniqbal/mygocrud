@@ -14,8 +14,8 @@ type Product struct {
 	Price       decimal.Decimal `json:"price"`
 	Description sql.NullString  `json:"description"`
 	Stock       int             `json:"stock"`
-	CreatedAt   time.Time       `json:"createdAt"`
-	UpdatedAt   time.Time       `json:"updatedAt"`
+	CreatedAt   time.Time       `json:"createdAt" gorm:"autoCreateTime"`
+	UpdatedAt   time.Time       `json:"updatedAt" gorm:"autoUpdateTime"`
 }
 
 type ProductDto struct {

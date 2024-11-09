@@ -28,6 +28,9 @@ func main() {
 	r.POST("/users", service.CreateUserHandler)
 	r.GET("/users", service.ReadUsersHandler)
 
+	r.POST("/products", service.CreateProductHandler)
+	r.GET("/products", service.ReadProductsHandler)
+
 	// Start server
 	err = r.Run(":8080")
 	if err != nil {

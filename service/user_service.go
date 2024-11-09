@@ -92,14 +92,27 @@ func ReadProductsHandler(c *gin.Context) {
 }
 
 func CreateProductHandler(c *gin.Context) {
-	var product model.Product
-	err := c.ShouldBind(&product)
+	var productDto model.ProductDto
+	err := c.ShouldBind(&productDto)
 	if err != nil {
 		c.JSON(
 			http.StatusBadRequest,
 			model.NewFailedResponse(fmt.Sprintf("failed to bind request: %s", err.Error())),
 		)
 		return
+	}
+
+	product := model.Product{
+		ID:        productDto.ID,
+		Name:      productDto.Name,
+		Price:     productDto.Price,
+		Stock:     productDto.Stock,
+		CreatedAt: productDto.CreatedAt,
+		UpdatedAt: productDto.UpdatedAt,
+	}
+	if productDto.Description != nil {
+		product.Description.String = *productDto.Description
+		product.Description.Valid = true
 	}
 
 	err = repository.Db.Create(&product).Error
@@ -111,5 +124,9 @@ func CreateProductHandler(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, model.NewSuccessResponse("Success", product))
+	productDto.ID = product.ID
+	productDto.CreatedAt = product.CreatedAt
+	productDto.UpdatedAt = product.UpdatedAt
+
+	c.JSON(http.StatusOK, model.NewSuccessResponse("Success", productDto))
 }

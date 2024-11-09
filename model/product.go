@@ -17,3 +17,13 @@ type Product struct {
 	CreatedAt   time.Time       `json:"createdAt"`
 	UpdatedAt   time.Time       `json:"updatedAt"`
 }
+
+type ProductDto struct {
+	ID          int             `json:"id"`
+	Name        string          `json:"name"`
+	Price       decimal.Decimal `json:"price"`
+	Description *string         `json:"description"`
+	Stock       int             `json:"stock"`
+	CreatedAt   time.Time       `json:"createdAt"`
+	UpdatedAt   time.Time       `json:"updatedAt"`
+}

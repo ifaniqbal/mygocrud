@@ -36,11 +36,17 @@ func ReadProductsHandler(c *gin.Context) {
 		})
 		return
 	}
+	var productsDtos []model.ProductDto
+	for _, product := range products {
+		var productDto model.ProductDto
+		productDto.FillFromModel(product)
+		productsDtos = append(productsDtos, productDto)
+	}
 
 	c.JSON(http.StatusOK, model.Response{
 		Success: true,
 		Message: "Success",
-		Data:    products,
+		Data:    productsDtos,
 	})
 }
 

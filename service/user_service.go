@@ -26,13 +26,13 @@ func ReadUsersHandler(c *gin.Context) {
 
 	err := repository.Db.Raw(query, filter).Scan(&users).Error
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, model.BaseResponse{
+		c.JSON(http.StatusInternalServerError, model.Response{
 			Message: fmt.Sprintf("failed to save user: %s", err.Error()),
 		})
 		return
 	}
 
-	c.JSON(http.StatusOK, model.BaseResponse{
+	c.JSON(http.StatusOK, model.Response{
 		Success: true,
 		Message: "Success",
 		Data:    users,
@@ -43,7 +43,7 @@ func CreateUserHandler(c *gin.Context) {
 	var user model.User
 	err := c.ShouldBind(&user)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, model.BaseResponse{
+		c.JSON(http.StatusBadRequest, model.Response{
 			Message: fmt.Sprintf("failed to bind request: %s", err.Error()),
 		})
 		return
@@ -51,13 +51,13 @@ func CreateUserHandler(c *gin.Context) {
 
 	err = repository.Db.Create(&user).Error
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, model.BaseResponse{
+		c.JSON(http.StatusInternalServerError, model.Response{
 			Message: fmt.Sprintf("failed to save user: %s", err.Error()),
 		})
 		return
 	}
 
-	c.JSON(http.StatusOK, model.BaseResponse{
+	c.JSON(http.StatusOK, model.Response{
 		Success: true,
 		Message: "Success",
 		Data:    user,

@@ -12,7 +12,7 @@ func CreateItemHandler(c *gin.Context) {
 	var newItem model.Item
 	err := c.ShouldBind(&newItem)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, model.BaseResponse{
+		c.JSON(http.StatusBadRequest, model.Response{
 			Success: false,
 			Data:    nil,
 			Message: fmt.Sprintf("failed to bind request: %s", err.Error()),
@@ -22,7 +22,7 @@ func CreateItemHandler(c *gin.Context) {
 
 	items = append(items, newItem)
 
-	c.JSON(http.StatusOK, model.BaseResponse{
+	c.JSON(http.StatusOK, model.Response{
 		Success: true,
 		Message: "Success",
 		Data:    newItem,
@@ -30,7 +30,7 @@ func CreateItemHandler(c *gin.Context) {
 }
 
 func ReadItemsHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, model.BaseResponse{
+	c.JSON(http.StatusOK, model.Response{
 		Success: true,
 		Message: "Success",
 		Data:    items,

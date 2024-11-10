@@ -14,6 +14,7 @@ type Product struct {
 	Price       decimal.Decimal `json:"price"`
 	Description sql.NullString  `json:"description"`
 	Stock       int             `json:"stock"`
+	ImagePath   sql.NullString  `json:"image_path"`
 	CreatedAt   time.Time       `json:"createdAt" gorm:"autoCreateTime"`
 	UpdatedAt   time.Time       `json:"updatedAt" gorm:"autoUpdateTime"`
 }
@@ -24,6 +25,7 @@ type ProductDto struct {
 	Price       int       `json:"price" binding:"min=10000"`
 	Description *string   `json:"description"`
 	Stock       int       `json:"stock" binding:"min=1"`
+	ImagePath   *string   `json:"image_path"`
 	CreatedAt   time.Time `json:"createdAt"`
 	UpdatedAt   time.Time `json:"updatedAt"`
 }
@@ -36,6 +38,9 @@ func (p *ProductDto) FillFromModel(model Product) {
 		p.Description = &model.Description.String
 	}
 	p.Stock = model.Stock
+	if model.ImagePath.Valid {
+		p.ImagePath = &model.ImagePath.String
+	}
 	p.CreatedAt = model.CreatedAt
 	p.UpdatedAt = model.UpdatedAt
 }
@@ -52,6 +57,11 @@ func (p ProductDto) ToModel() Product {
 	if p.Description != nil {
 		model.Description.String = *p.Description
 		model.Description.Valid = true
+	}
+
+	if p.ImagePath != nil {
+		model.ImagePath.String = *p.ImagePath
+		model.ImagePath.Valid = true
 	}
 
 	return model

@@ -33,6 +33,7 @@ func main() {
 	r.GET("/products/:id", service.ReadByIdProductsHandler)
 	r.PUT("/products/:id", service.UpdateProductHandler)
 	r.DELETE("/products/:id", service.DeleteProductHandler)
+	r.POST("/upload-product-image", service.UploadProductImageHandler)
 
 	// Start server
 	err = r.Run(":8080")

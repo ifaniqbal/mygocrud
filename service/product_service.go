@@ -6,6 +6,7 @@ import (
 	"mygocrud/model"
 	"mygocrud/repository"
 	"net/http"
+	"path/filepath"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -188,4 +189,32 @@ func DeleteProductHandler(c *gin.Context) {
 		http.StatusOK,
 		model.NewSuccessResponse(fmt.Sprintf("%d products deleted", result.RowsAffected), nil),
 	)
+}
+
+var productUploadDir = "uploads/products"
+
+func UploadProductImageHandler(c *gin.Context) {
+	file, err := c.FormFile("image")
+	if err != nil {
+		c.JSON(
+			http.StatusBadRequest,
+			model.NewFailedResponse(fmt.Sprintf("failed to get uploaded file: %s", err.Error())),
+		)
+		return
+	}
+
+	name := c.PostForm("name")
+	path := filepath.Join(productUploadDir, name)
+	err = c.SaveUploadedFile(file, path)
+	if err != nil {
+		c.JSON(
+			http.StatusInternalServerError,
+			model.NewFailedResponse(fmt.Sprintf("failed to save file: %s", err.Error())),
+		)
+		return
+	}
+
+	var productDto model.ProductDto
+	productDto.ImagePath = &path
+	c.JSON(http.StatusOK, model.NewSuccessResponse("Success", productDto))
 }

@@ -51,17 +51,30 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{"message": "Success", "filename": multipartFileHeader.Filename})
 	})
 
-	//r.GET("/download", func(c *gin.Context) {
-	//	name := c.Query("file")
-	//	path := filepath.Join("DIRECTORY", name)
-	//	if _, err := filepath.Abs(path); err != nil {
-	//		c.Status(http.StatusNotFound)
-	//		return
-	//	}
-	//
-	//	c.FileAttachment(path, name)
-	//})
-	//
+	r.GET("/download", func(c *gin.Context) {
+		name := c.Query("file")
+		path := filepath.Join(uploadDir, name)
+		if _, err := filepath.Abs(path); err != nil {
+			c.Status(http.StatusNotFound)
+			return
+		}
+
+		c.FileAttachment(path, name)
+	})
+
+	r.GET("/file", func(c *gin.Context) {
+		name := c.Query("file")
+		path := filepath.Join(uploadDir, name)
+		if _, err := filepath.Abs(path); err != nil {
+			c.Status(http.StatusNotFound)
+			return
+		}
+
+		c.Header("Content-Disposition", fmt.Sprintf(`inline; filename="%s"`, name))
+		c.Header("Content-Type", "plain/text")
+		c.File(path)
+	})
+
 	err := r.Run(":8080")
 	if err != nil {
 		log.Fatalln(err)

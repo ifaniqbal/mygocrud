@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":  \"mouse\",\n  \"description\": \"bekas\",\n  \"price\":  20000,\n  \"stock\": 22\n}",
+							"raw": "{\n  \"name\":  \"laptop lenovo\",\n  \"description\": \"bekas\",\n  \"image_path\": \"uploads/products/laptop-lenovo.png\",\n  \"price\":  20000,\n  \"stock\": 22\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -245,17 +245,94 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base-url}}/products/31",
+							"raw": "{{base-url}}/products/32",
 							"host": [
 								"{{base-url}}"
 							],
 							"path": [
 								"products",
-								"31"
+								"32"
 							]
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Upload Product Image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/Users/iqbal/Downloads/VBG.png"
+								},
+								{
+									"key": "name",
+									"value": "laptop-lenovo.png",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base-url}}/upload-product-image",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"upload-product-image"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"iqbal\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-url}}/users",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 31 May 2023 03:13:28 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "175"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User created successfully\",\n    \"user\": {\n        \"ID\": 7,\n        \"CreatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"UpdatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"DeletedAt\": null,\n        \"name\": \"iqbal\"\n    }\n}"
+						}
+					]
 				}
 			]
 		},
@@ -576,6 +653,84 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Upload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/iqbal/github.com/ifaniqbal/mygocrud/README.md"
+						},
+						{
+							"key": "name",
+							"value": "readme.md",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base-url}}/upload",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base-url}}/download?file=readme.md",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"download"
+					],
+					"query": [
+						{
+							"key": "file",
+							"value": "readme.md"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "File Inline",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base-url}}/file?file=readme.md",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"file"
+					],
+					"query": [
+						{
+							"key": "file",
+							"value": "readme.md"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [

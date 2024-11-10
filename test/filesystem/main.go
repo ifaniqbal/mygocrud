@@ -2,46 +2,55 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"net/http"
 	"os"
 	"path/filepath"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	dirName := "DIRECTORY"
-	newDirName := "NEW_DIRECTORY"
-	fileName := "FILE"
-	newFileName := "NEW_FILE"
-	filePath := filepath.Join(dirName, fileName)
+	//dirName := "DIRECTORY"
+	//newDirName := "NEW_DIRECTORY"
+	//fileName := "FILE"
+	//newFileName := "NEW_FILE"
+	//filePath := filepath.Join(dirName, fileName)
 	//newFilePath := filepath.Join(dirName, newFileName)
-	newFileDirPath := filepath.Join(newDirName, newFileName)
+	//newFileDirPath := filepath.Join(newDirName, newFileName)
 
 	//createDir(dirName)
-	createFile(filePath, "hello world\n")
+	//createFile(filePath, "hello world\n")
 	//appendToFile(filePath, "it works\n")
 	//readFile(filePath)
-	createDir(newDirName)
-	renameFile(filePath, newFileDirPath)
-	//deleteFile(newFilePath)
+	//renameFile(filePath, newFileDirPath)
+	//deleteFile(filePath)
 	//deleteDir(dirName)
-	//
-	//r := gin.Default()
-	//uploadDir := "UPLOAD"
-	//r.POST("/upload", func(c *gin.Context) {
-	//	file, err := c.FormFile("file")
-	//	if err != nil {
-	//		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to retrieve file"})
-	//		return
-	//	}
-	//
-	//	name := c.Query("name")
-	//	path := filepath.Join(uploadDir, name)
-	//	if err = c.SaveUploadedFile(file, path); err != nil {
-	//		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save file"})
-	//		return
-	//	}
-	//
-	//	c.JSON(http.StatusOK, gin.H{"message": "Success", "filename": file.Filename})
-	//})
+
+	r := gin.Default()
+
+	uploadDir := "UPLOAD"
+
+	r.POST("/upload", func(c *gin.Context) {
+		multipartFileHeader, err := c.FormFile("file")
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to retrieve file"})
+			return
+		}
+
+		name := c.PostForm("name")
+		path := filepath.Join(uploadDir, name)
+		if err = c.SaveUploadedFile(multipartFileHeader, path); err != nil {
+			c.JSON(
+				http.StatusInternalServerError,
+				gin.H{"error": fmt.Sprintf("%s: %s", "Failed to save file", err.Error())},
+			)
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"message": "Success", "filename": multipartFileHeader.Filename})
+	})
+
 	//r.GET("/download", func(c *gin.Context) {
 	//	name := c.Query("file")
 	//	path := filepath.Join("DIRECTORY", name)
@@ -53,11 +62,11 @@ func main() {
 	//	c.FileAttachment(path, name)
 	//})
 	//
-	//err := r.Run(":8080")
-	//if err != nil {
-	//	log.Fatalln(err)
-	//	return
-	//}
+	err := r.Run(":8080")
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
 }
 
 func createDir(name string) {

@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":  \"laptop2\",\n  \"description\": \"bekas\",\n  \"price\":  20000000,\n  \"stock\": 2\n}",
+							"raw": "{\n  \"name\":  \"mouse\",\n  \"description\": \"bekas\",\n  \"price\":  20000,\n  \"stock\": 22\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -87,7 +87,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\":  \"laptop30\",\n  \"description\": null,\n  \"price\":  10,\n  \"stock\": 1\n}",
+							"raw": "{\n  \"name\":  \"mouse pro\",\n  \"description\": null,\n  \"price\":  100000,\n  \"stock\": 11\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -95,13 +95,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{base-url}}/products/30",
+							"raw": "{{base-url}}/products/31",
 							"host": [
 								"{{base-url}}"
 							],
 							"path": [
 								"products",
-								"30"
+								"31"
 							]
 						}
 					},
@@ -158,13 +158,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base-url}}/products/2",
+							"raw": "{{base-url}}/products/31",
 							"host": [
 								"{{base-url}}"
 							],
 							"path": [
 								"products",
-								"2"
+								"31"
 							],
 							"query": [
 								{
@@ -245,13 +245,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base-url}}/products/30",
+							"raw": "{{base-url}}/products/31",
 							"host": [
 								"{{base-url}}"
 							],
 							"path": [
 								"products",
-								"30"
+								"31"
 							]
 						}
 					},

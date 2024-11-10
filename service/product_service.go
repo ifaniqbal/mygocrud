@@ -9,7 +9,6 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/shopspring/decimal"
 	"gorm.io/gorm"
 )
 
@@ -75,10 +74,12 @@ func ReadByIdProductsHandler(c *gin.Context) {
 		return
 	}
 
+	var productDto model.ProductDto
+	productDto.FillFromModel(product)
 	c.JSON(http.StatusOK, model.Response{
 		Success: true,
 		Message: "Success",
-		Data:    product,
+		Data:    productDto,
 	})
 }
 
@@ -93,19 +94,7 @@ func CreateProductHandler(c *gin.Context) {
 		return
 	}
 
-	product := model.Product{
-		ID:        productDto.ID,
-		Name:      productDto.Name,
-		Price:     decimal.NewFromInt(int64(productDto.Price)),
-		Stock:     productDto.Stock,
-		CreatedAt: productDto.CreatedAt,
-		UpdatedAt: productDto.UpdatedAt,
-	}
-	if productDto.Description != nil {
-		product.Description.String = *productDto.Description
-		product.Description.Valid = true
-	}
-
+	product := productDto.ToModel()
 	err = repository.Db.Create(&product).Error
 	if err != nil {
 		c.JSON(
@@ -144,8 +133,8 @@ func UpdateProductHandler(c *gin.Context) {
 
 	// validasi logika
 
-	var product model.Product
-	err = repository.Db.First(&product, id).Error
+	var existingProduct model.Product
+	err = repository.Db.First(&existingProduct, id).Error
 	if err != nil {
 		c.JSON(
 			http.StatusInternalServerError,
@@ -154,15 +143,12 @@ func UpdateProductHandler(c *gin.Context) {
 		return
 	}
 
-	product.Name = productDto.Name
-	product.Price = decimal.NewFromInt(int64(productDto.Price))
-	product.Stock = productDto.Stock
-	if productDto.Description != nil {
-		product.Description.String = *productDto.Description
-		product.Description.Valid = true
-	}
+	product := productDto.ToModel()
+	product.ID = existingProduct.ID
+	product.CreatedAt = existingProduct.CreatedAt
+	product.UpdatedAt = existingProduct.UpdatedAt
 
-	err = repository.Db.Save(&product).Error
+	err = repository.Db.Save(&existingProduct).Error
 	if err != nil {
 		c.JSON(
 			http.StatusInternalServerError,
@@ -171,9 +157,9 @@ func UpdateProductHandler(c *gin.Context) {
 		return
 	}
 
-	productDto.ID = product.ID
-	productDto.CreatedAt = product.CreatedAt
-	productDto.UpdatedAt = product.UpdatedAt
+	productDto.ID = existingProduct.ID
+	productDto.CreatedAt = existingProduct.CreatedAt
+	productDto.UpdatedAt = existingProduct.UpdatedAt
 
 	c.JSON(http.StatusOK, model.NewSuccessResponse("Success", productDto))
 }

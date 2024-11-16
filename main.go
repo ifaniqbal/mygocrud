@@ -33,30 +33,74 @@ func main() {
 	r.POST("/users", service.CreateUserHandler)
 	r.GET("/users", service.ReadUsersHandler)
 
-	r.POST("/products", service.CreateProductHandler)
-	r.GET("/products", service.ReadProductsHandler)
-	r.GET("/products/:id", service.ReadByIdProductsHandler)
-	r.PUT("/products/:id", service.UpdateProductHandler)
-	r.DELETE("/products/:id", service.DeleteProductHandler)
-	r.POST("/upload-product-image", service.UploadProductImageHandler)
+	authGroup := r.Group("/")
+	// gin auth
+	// authorization
+	// next
+	// after middleware
+	// log gin auth
+	authGroup.Use(ginAuth())
+	authGroup.Use(ginLoggingAfterMiddleware())
+	authGroup.POST("/products", service.CreateProductHandler)
+	authGroup.GET("/products", service.ReadProductsHandler)
+	authGroup.GET("/products/:id", service.ReadByIdProductsHandler)
+	authGroup.PUT("/products/:id", service.UpdateProductHandler)
+	authGroup.DELETE("/products/:id", service.DeleteProductHandler)
+	authGroup.POST("/upload-product-image", service.UploadProductImageHandler)
 
-	// Start server
-	//err = r.Run(":8080")
-	//if err != nil {
-	//	log.Fatalln(err)
-	//	return
-	//}
-
-	http.Handle("/upload-product-image", afterMiddleware(
-		loggingBeforeMiddleware(authorizationMiddleware(http.HandlerFunc(uploadProductImageV2))),
-		loggingAfterMiddleware,
-	))
-
-	err = http.ListenAndServe(":8080", nil)
+	//Start server
+	err = r.Run(":8080")
 	if err != nil {
 		log.Fatalln(err)
 		return
 	}
+
+	//http.Handle("/upload-product-image", afterMiddleware(
+	//	loggingBeforeMiddleware(authorizationMiddleware(http.HandlerFunc(uploadProductImageV2))),
+	//	loggingAfterMiddleware,
+	//))
+
+	//http.HandleFunc("/upload-product-image", uploadProductImageV2)
+	//
+	//err = http.ListenAndServe(":8080", nil)
+	//if err != nil {
+	//	log.Fatalln(err)
+	//	return
+	//}
+}
+
+func ginAuth() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		auth := c.GetHeader("Authorization")
+
+		if auth == "" {
+			c.String(http.StatusUnauthorized, "empty token")
+			c.Abort()
+			return
+		}
+
+		c.Next()
+
+		log.Println("Gin Auth:", c.Request.URL)
+	}
+}
+
+func ginLoggingAfterMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Next()
+
+		log.Println("After Middleware:", c.Request.URL)
+	}
+}
+
+func authorize(w http.ResponseWriter, r *http.Request) bool {
+	auth := r.Header.Get("Authorization")
+	if auth == "" {
+		http.Error(w, "empty token", http.StatusUnauthorized)
+		return false
+	}
+
+	return true
 }
 
 func authorizationMiddleware(next http.Handler) http.Handler {
@@ -94,6 +138,11 @@ func loggingAfterMiddleware(w http.ResponseWriter, r *http.Request) {
 }
 
 func uploadProductImageV2(w http.ResponseWriter, r *http.Request) {
+	ok := authorize(w, r)
+	if !ok {
+		return
+	}
+
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusNotFound)
 		return

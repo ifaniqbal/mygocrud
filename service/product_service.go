@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"fmt"
+	"log"
 	"mygocrud/model"
 	"mygocrud/repository"
 	"net/http"
@@ -232,6 +233,8 @@ func UploadProductImageHandler(c *gin.Context) {
 		)
 		return
 	}
+
+	log.Println("Checking file mime type")
 
 	// Detect the MIME type
 	mimeType := http.DetectContentType(buffer)

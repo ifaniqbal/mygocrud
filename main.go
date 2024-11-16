@@ -20,6 +20,7 @@ func main() {
 	}
 
 	r := gin.Default()
+	r.MaxMultipartMemory = 12 << 10 // 12kb
 
 	// Routes
 	r.POST("/items", service.CreateItemHandler)

@@ -203,6 +203,24 @@ func UploadProductImageHandler(c *gin.Context) {
 		return
 	}
 
+	maxFileSize := 100 << 10 // 10kb
+	if file.Size > int64(maxFileSize) {
+		c.JSON(
+			http.StatusBadRequest,
+			model.NewFailedResponse("file size exceed maximum allowed"),
+		)
+		return
+	}
+
+	ext := filepath.Ext(file.Filename)
+	if ext != ".jpg" && ext != ".jpeg" {
+		c.JSON(
+			http.StatusBadRequest,
+			model.NewFailedResponse("please upload .jpg or .jpeg file"),
+		)
+		return
+	}
+
 	name := c.PostForm("name")
 	path := filepath.Join(productUploadDir, name)
 	err = c.SaveUploadedFile(file, path)

@@ -1,0 +1,763 @@
+{
+	"info": {
+		"_postman_id": "e384ec0e-95cc-4a40-8936-e0386fcd6f6e",
+		"name": "CRUD API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3498524"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":  \"laptop lenovo\",\n  \"description\": \"bekas\",\n  \"image_path\": \"uploads/products/laptop-lenovo.png\",\n  \"price\":  20000,\n  \"stock\": 22\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/products",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"iqbal\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-url}}/users",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 31 May 2023 03:13:28 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "175"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User created successfully\",\n    \"user\": {\n        \"ID\": 7,\n        \"CreatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"UpdatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"DeletedAt\": null,\n        \"name\": \"iqbal\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":  \"mouse pro\",\n  \"description\": null,\n  \"price\":  100000,\n  \"stock\": 11\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/products/31",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"31"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"iqbal\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-url}}/users",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 31 May 2023 03:13:28 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "175"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User created successfully\",\n    \"user\": {\n        \"ID\": 7,\n        \"CreatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"UpdatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"DeletedAt\": null,\n        \"name\": \"iqbal\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/products/31",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"31"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"iqbal\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-url}}/users",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 31 May 2023 03:13:28 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "175"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User created successfully\",\n    \"user\": {\n        \"ID\": 7,\n        \"CreatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"UpdatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"DeletedAt\": null,\n        \"name\": \"iqbal\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/products",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/products/32",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"32"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Product Image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/Users/iqbal/Downloads/VBG.png"
+								},
+								{
+									"key": "name",
+									"value": "laptop-lenovo.png",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base-url}}/upload-product-image",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"upload-product-image"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"iqbal\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-url}}/users",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 31 May 2023 03:13:28 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "175"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User created successfully\",\n    \"user\": {\n        \"ID\": 7,\n        \"CreatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"UpdatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"DeletedAt\": null,\n        \"name\": \"iqbal\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"ifan2@gmail.com\",\n    \"username\": \"ifan2\",\n    \"passwordHash\": \"2alsdkjflk10oi2187\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/users",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"iqbal\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-url}}/users",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 31 May 2023 03:13:28 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "175"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User created successfully\",\n    \"user\": {\n        \"ID\": 7,\n        \"CreatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"UpdatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"DeletedAt\": null,\n        \"name\": \"iqbal\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/users",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/users/:id",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"ifan iqbal\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/users/:id",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/users/:id",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Items",
+			"item": [
+				{
+					"name": "Create Items",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"laptop\",\n    \"code\": 123,\n    \"posting_date\": \"2024-11-03\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/items",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"items"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"iqbal\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base-url}}/users",
+									"host": [
+										"{{base-url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 31 May 2023 03:13:28 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "175"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User created successfully\",\n    \"user\": {\n        \"ID\": 7,\n        \"CreatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"UpdatedAt\": \"2023-05-31T10:13:28.384+07:00\",\n        \"DeletedAt\": null,\n        \"name\": \"iqbal\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/items",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload File example.com",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/iqbal/Downloads/VBG.png"
+								},
+								{
+									"key": "name",
+									"value": "virtual background",
+									"type": "text"
+								},
+								{
+									"key": "expiry",
+									"value": "30",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://example.com",
+							"protocol": "http",
+							"host": [
+								"example",
+								"com"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Upload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/iqbal/github.com/ifaniqbal/mygocrud/README.md"
+						},
+						{
+							"key": "name",
+							"value": "readme.md",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base-url}}/upload",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base-url}}/download?file=readme.md",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"download"
+					],
+					"query": [
+						{
+							"key": "file",
+							"value": "readme.md"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "File Inline",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base-url}}/file?file=readme.md",
+					"host": [
+						"{{base-url}}"
+					],
+					"path": [
+						"file"
+					],
+					"query": [
+						{
+							"key": "file",
+							"value": "readme.md"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base-url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}

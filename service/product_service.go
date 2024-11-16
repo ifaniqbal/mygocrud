@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"path/filepath"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -194,7 +195,7 @@ func DeleteProductHandler(c *gin.Context) {
 var productUploadDir = "uploads/products"
 
 func UploadProductImageHandler(c *gin.Context) {
-	file, err := c.FormFile("image")
+	formFile, file, err := c.Request.FormFile("image")
 	if err != nil {
 		c.JSON(
 			http.StatusBadRequest,
@@ -202,6 +203,7 @@ func UploadProductImageHandler(c *gin.Context) {
 		)
 		return
 	}
+	defer formFile.Close()
 
 	maxFileSize := 100 << 10 // 10kb
 	if file.Size > int64(maxFileSize) {
@@ -217,6 +219,26 @@ func UploadProductImageHandler(c *gin.Context) {
 		c.JSON(
 			http.StatusBadRequest,
 			model.NewFailedResponse("please upload .jpg or .jpeg file"),
+		)
+		return
+	}
+
+	buffer := make([]byte, 512)
+	_, err = formFile.Read(buffer)
+	if err != nil {
+		c.JSON(
+			http.StatusBadRequest,
+			model.NewFailedResponse("failed to read file buffer"),
+		)
+		return
+	}
+
+	// Detect the MIME type
+	mimeType := http.DetectContentType(buffer)
+	if !strings.Contains(mimeType, "image/jpeg") {
+		c.JSON(
+			http.StatusBadRequest,
+			model.NewFailedResponse("file is not a jpeg picture"),
 		)
 		return
 	}
